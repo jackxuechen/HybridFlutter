@@ -157,7 +157,7 @@ class CCParser {
             node['className'] = value;
         } else if (name.indexOf('bind') == 0) {//events
             node['events'][name] = value;
-        } else if (name.indexOf('cc:') == 0) {//directives
+        } else if (name.indexOf('wx:') == 0) {//directives
             if (!node['repeatDirective']) {
                 node['repeatDirective'] = {};
             }
@@ -166,27 +166,27 @@ class CCParser {
             }
             let repeatDirective = node['repeatDirective'], shownDirective = node['shownDirective'];
             let name_ = name.substr(4), attr = name.trim();
-            if (attr.indexOf('cc:for') == 0) {
-                if (attr == 'cc:for') {
+            if (attr.indexOf('wx:for') == 0) {
+                if (attr == 'wx:for') {
                     repeatDirective['name'] = name_;
                     repeatDirective['expression'] = value;
                 }
-                else if (attr == 'cc:for-item') {
+                else if (attr == 'wx:for-item') {
                     repeatDirective['item'] = value;
                 }
-                else if (attr == 'cc:for-index') {
+                else if (attr == 'wx:for-index') {
                     repeatDirective['index'] = value;
                 }
             }
-            else if (attr == 'cc:if') {
+            else if (attr == 'wx:if') {
                 shownDirective['name'] = name_
                 shownDirective['expression'] = value
             }
-            else if (attr == 'cc:elif') {
+            else if (attr == 'wx:elif') {
                 shownDirective['name'] = name_;
                 shownDirective['expression'] = value;
             }
-            else if (attr == 'cc:else') {
+            else if (attr == 'wx:else') {
                 shownDirective['name'] = name_;
                 shownDirective['expression'] = value;
             }

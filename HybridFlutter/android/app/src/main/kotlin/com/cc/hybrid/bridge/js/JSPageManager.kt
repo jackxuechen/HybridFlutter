@@ -55,8 +55,8 @@ object JSPageManager {
                     receiver as Any
                 }, "__native__refresh")
 
-                val cc = realPageObject.getObject("cc")
-                cc.registerJavaMethod(JavaCallback { receiver, parameters ->
+                val wx = realPageObject.getObject("wx")
+                wx.registerJavaMethod(JavaCallback { receiver, parameters ->
                     val localPageId = receiver.getString("pageId")
                     val data = parameters?.getObject(0)
                     if (null != data && data.contains("title")) {
@@ -64,7 +64,7 @@ object JSPageManager {
                     }
                     receiver as Any
                 }, "setNavigationBarTitle")
-                cc.registerJavaMethod(JavaCallback { receiver, parameters ->
+                wx.registerJavaMethod(JavaCallback { receiver, parameters ->
                     val localPageId = receiver.getString("pageId")
                     val data = parameters?.getObject(0)
                     if (null != data && data.contains("backgroundColor")) {
@@ -72,7 +72,7 @@ object JSPageManager {
                     }
                     receiver as Any
                 }, "setNavigationBarColor")
-                cc.registerJavaMethod(JavaCallback { receiver, parameters ->
+                wx.registerJavaMethod(JavaCallback { receiver, parameters ->
                     val localPageId = receiver.getString("pageId")
                     val data = parameters?.getObject(0)
                     if (null != data && data.contains("backgroundColor")) {
@@ -80,7 +80,7 @@ object JSPageManager {
                     }
                     receiver as Any
                 }, "setBackgroundColor")
-                cc.registerJavaMethod(JavaCallback { receiver, parameters ->
+                wx.registerJavaMethod(JavaCallback { receiver, parameters ->
                     val localPageId = receiver.getString("pageId")
                     val data = parameters?.getObject(0)
                     if (null != data) {
@@ -93,51 +93,51 @@ object JSPageManager {
                     receiver as Any
                 }, "navigateTo")
 
-                cc.registerJavaMethod(JavaCallback { receiver, parameters ->
+                wx.registerJavaMethod(JavaCallback { receiver, parameters ->
                     val localPageId = receiver.getString("pageId")
                     val data = parameters?.getObject(0)
                     data?.add("pageId", localPageId)
                     data?.add("requestId", UUID.randomUUID().toString())
-                    cc.getObject("requestData").add(data?.getString("requestId"), data)
+                    wx.getObject("requestData").add(data?.getString("requestId"), data)
                     JSNetwork().request(data!!)
                     receiver as Any
                 }, "request")
 
-                cc.registerJavaMethod(JavaCallback { receiver, parameters ->
+                wx.registerJavaMethod(JavaCallback { receiver, parameters ->
                     val data = parameters?.getObject(0)
                     LoadingUtil.showLoading(data)
                     receiver as Any
                 }, "showLoading")
 
-                cc.registerJavaMethod(JavaCallback { receiver, parameters ->
+                wx.registerJavaMethod(JavaCallback { receiver, parameters ->
                     val localPageId = receiver.getString("pageId")
                     EventManager.instance.sendMessage(what = EventManager.TYPE_START_PULL_DOWN_REFRESH, pageId = localPageId, obj = "")
                     receiver as Any
                 }, "startPullDownRefresh")
 
-                cc.registerJavaMethod(JavaCallback { receiver, parameters ->
+                wx.registerJavaMethod(JavaCallback { receiver, parameters ->
                     val localPageId = receiver.getString("pageId")
                     EventManager.instance.sendMessage(what = EventManager.TYPE_STOP_PULL_DOWN_REFRESH, pageId = localPageId, obj = "")
                     receiver as Any
                 }, "stopPullDownRefresh")
 
-                cc.registerJavaMethod(JavaCallback { receiver, parameters ->
+                wx.registerJavaMethod(JavaCallback { receiver, parameters ->
                     LoadingUtil.hideLoading()
                     receiver as Any
                 }, "hideLoading")
 
-                cc.registerJavaMethod(JavaCallback { receiver, parameters ->
+                wx.registerJavaMethod(JavaCallback { receiver, parameters ->
                     val data = parameters?.getObject(0)
                     ToastUtil.showToast(data)
                     receiver as Any
                 }, "showToast")
 
-                cc.registerJavaMethod(JavaCallback { receiver, parameters ->
+                wx.registerJavaMethod(JavaCallback { receiver, parameters ->
                     ToastUtil.hideToast()
                     receiver as Any
                 }, "hideToast")
 
-                cc.registerJavaMethod(JavaCallback { receiver, parameters ->
+                wx.registerJavaMethod(JavaCallback { receiver, parameters ->
                     val data = parameters?.getObject(0)
                     val key = data?.getString("key")
                     val value = data?.get("data")
@@ -147,7 +147,7 @@ object JSPageManager {
                     receiver as Any
                 }, "setStorage")
 
-                cc.registerJavaMethod(JavaCallback { receiver, parameters ->
+                wx.registerJavaMethod(JavaCallback { receiver, parameters ->
                     val data = parameters?.getObject(0)
                     val key = data?.getString("key")
                     val success = data?.getObject("success")
@@ -183,7 +183,7 @@ object JSPageManager {
     @Synchronized
     fun onNetworkResult(pageId: String, requestId: String, success: String, json: String) {
         try {
-            getV8Page(pageId)?.getObject("cc")?.executeJSFunction("onNetworkResult", requestId, success, json)
+            getV8Page(pageId)?.getObject("wx")?.executeJSFunction("onNetworkResult", requestId, success, json)
         } catch (e: Exception) {
             Logger.printError(e)
         }

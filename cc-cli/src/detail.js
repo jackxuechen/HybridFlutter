@@ -15,7 +15,7 @@ Page({
     */
     onLoad(e) {
         var detail = JSON.parse(e.item);
-        cc.setNavigationBarTitle({
+        wx.setNavigationBarTitle({
             title: detail.title
         });
         var catalogShort = detail.catalog;

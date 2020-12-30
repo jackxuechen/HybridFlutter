@@ -33,10 +33,10 @@ function loadPage(pageId) {
 
         this.pageId = pageId;
 
-        this.cc = new CC(pageId);
+        this.wx = new CC(pageId);
 
         // 需要加这一行赋值，不然在模板使用cc.调用不到
-        let cc = this.cc;
+        let wx = this.wx;
 
         this.__native__evalInPage = function (jsContent) {
             if (!jsContent) {

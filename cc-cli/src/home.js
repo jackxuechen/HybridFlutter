@@ -11,16 +11,16 @@ Page({
     * 页面加载时触发。一个页面只会调用一次，可以在 onLoad 的参数中获取打开当前页面路径中的参数。
     */
     onLoad(e) {
-        cc.setNavigationBarTitle({
+        wx.setNavigationBarTitle({
             title: 'Python系列丛书'
         }); 
-        cc.showLoading({});
+        wx.showLoading({});
         this.doRequest(true);  
     },
 
     doRequest(isOnload) {
         let that = this;
-        cc.request({
+        wx.request({
             url: 'http://47.107.46.220:10808/query', //'https://douban.uieee.com/v2/book/search?q=python', 
             data: {},
             header: {},
@@ -29,22 +29,22 @@ Page({
                 that.setData({
                     list: response.body.books
                 });
-                cc.showToast({
+                wx.showToast({
                     title: '加载成功'
                 });
             },
             fail: function (error) {
                 console.log('request error:' + JSON.stringify(error));
-                cc.showToast({
+                wx.showToast({
                     title: '加载失败'
                 });
             },
             complete: function () {
                 console.log('request complete');
                 if (isOnload) {
-                    cc.hideLoading(); 
+                    wx.hideLoading();
                 } else {
-                    cc.stopPullDownRefresh();
+                    wx.stopPullDownRefresh();
                 }
             } 
         });
@@ -52,7 +52,7 @@ Page({
 
     onItemClick(e) {
         var item = this.data.list[e.target.dataset.index];  
-        cc.navigateTo({ 
+        wx.navigateTo({
             url: "detail?item=" + JSON.stringify(item)
         });
     },   

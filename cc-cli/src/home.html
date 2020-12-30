@@ -11,7 +11,7 @@
 <body>
     <singlechildscrollview>  
         <column>   
-            <container id="btn-container" cc:for="{{list}}"> 
+            <container id="btn-container" wx:for="{{list}}">
                 <raisedbutton id="raised-button" bindtap="onItemClick" data-index="{{index}}">
                     <row>
                         <container id="image-container">

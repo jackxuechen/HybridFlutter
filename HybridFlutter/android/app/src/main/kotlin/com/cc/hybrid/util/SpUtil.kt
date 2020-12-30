@@ -7,7 +7,7 @@ object SpUtil {
     private lateinit var sp: SharedPreferences
 
     fun initSp(context: Context) {
-        sp = context.getSharedPreferences("cc", Context.MODE_PRIVATE)
+        sp = context.getSharedPreferences("wx", Context.MODE_PRIVATE)
     }
 
     fun put(key: String, value: Any) {
